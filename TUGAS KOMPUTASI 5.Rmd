@@ -1,0 +1,72 @@
+---
+title: "TUGAS KOMPUTASI_5"
+author: "GRACIA ELKRIZA PURBA"
+date: "2026-10-03"
+---
+#Kasus 1
+##Rata-rata waktu tunggu mu = 5 menit. Berapa peluang P(X > 5)?
+pexp(5, rate = 1/5, lower.tail = FALSE) 
+#36.79% peluang waktu tunggu lebih dari 5 menit.
+x_dexp <- seq(1, 30, by = 1)
+y_dexp <- dexp(x_dexp, rate = 0.2)
+plot(x_dexp, y_dexp, type="l", col="yellow", lwd=2,
+     main="PDF Distribusi Eksponensial (λ=0.2)",
+     xlab="x", ylab="f(x)")
+
+#kasus2
+##Berat bersih kemasan kopi menyebar normal dengan mu = 250 gram dan sigma = 5 gram. 
+#Kemasan dianggap underweight jika beratnya kurang dari 240 gram. 
+#Berapa proporsi produk yang tergolong underweight?
+set.seed(2025)
+n <- 1000
+a <- 0
+b <- 20
+
+#varians.
+v_x <- (b - a)^2 / 12
+v_x
+#Ragam waktu tunggu penumpang adalah sekitar 33.33 menit^2.
+
+E_x <- (a + b) / 2
+E_x
+#generate sample
+x <- runif(n, min = a, max = b)
+#plot histo
+hist(x, breaks = 30, probability = T,
+     main = "Histogram sampel U(0,20) dengan PDF teoritis",
+     xlab = "x (menit setelah 07.00)")
+curve(dunif(x, min = a, max = b), from = a, to = b, add = TRUE, lwd = 2)
+
+#kasus 3
+##Masa pakai sensor suhu memiliki rata-rata mu = 10 tahun. Berapa peluang sensor 
+#tersebut rusak sebelum mencapai usia 5 tahun?
+pexp(5, rate = 1/10)
+# 39.35% peluang sensor rusak sebelum berusia 5 tahun
+x_dexp <- seq(1, 30, by = 1)
+y_dexp <- dexp(x_dexp, rate = 0.1)
+plot(x_dexp, y_dexp, type="l", col="purple", lwd=2,
+     main="PDF Distribusi Eksponensial (λ=0.1)",
+     xlab="x", ylab="f(x)")
+
+#kasus4
+##Berat bersih kemasan kopi menyebar normal dengan mu = 250 gram dan sigma = 5 gram. Kemasan dianggap underweight jika beratnya kurang dari 240 gram.
+#Berapa proporsi produk yang tergolong underweight?
+mu <- 250
+Sig <- 5
+
+
+kem <- (240 - mu) / Sig
+kem
+# 2.28% produk tergolong underweight.
+pnorm(240, mean = mu, sd = Sig)
+
+# generate sample
+set.seed(2025)
+berat <- rnorm(100000, mean = mu, sd = Sig)
+mean(berat < 240)
+
+x <- rnorm(n, mean = mu, sd = Sig)
+x
+# Statistik sampel
+(x_bar <- mean(x))
+(prop_under <- mean(x < 240))
